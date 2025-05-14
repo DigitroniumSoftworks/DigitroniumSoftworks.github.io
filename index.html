@@ -358,11 +358,13 @@
         .logo img {
             height: 40px;
             margin-right: 0.5rem;
+            transition: var(--transition);
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
@@ -482,6 +484,7 @@
         .hero-logo {
             max-width: 400px;
             margin-bottom: 2rem;
+            transition: var(--transition);
         }
 
         .hero h1 {
@@ -743,6 +746,7 @@
         .footer-logo img {
             height: 40px;
             margin-right: 0.5rem;
+            transition: var(--transition);
         }
 
         .footer-links {
@@ -911,7 +915,7 @@
     <header>
         <nav>
             <div class="logo">
-                <img src="/images/logo-icon.png" alt="Digitronium Logo">
+                <img src="/images/logo-icon.png" alt="Digitronium Logo" id="logo-icon">
                 <span>Digitronium</span>
             </div>
             <ul class="nav-links">
@@ -934,7 +938,7 @@
     <main>
         <section id="home" class="hero">
             <div class="hero-content">
-                <img src="/images/logo.png" alt="Digitronium Softworks" class="hero-logo">
+                <img src="/images/logo.png" alt="Digitronium Softworks" class="hero-logo" id="main-logo">
                 <h1>Digitronium <span>Softworks</span></h1>
                 <p class="tagline">The worst company you can count on.</p>
                 <div class="cta-buttons">
@@ -981,7 +985,7 @@
             <footer>
                 <div class="footer-content">
                     <div class="footer-logo">
-                        <img src="/images/logo-icon.png" alt="Digitronium Logo">
+                        <img src="/images/logo-icon.png" alt="Digitronium Logo" id="footer-logo-icon">
                         <span>Digitronium</span>
                     </div>
                 </div>
@@ -1084,20 +1088,39 @@
             // Dark mode toggle functionality
             const themeToggle = document.querySelector('.theme-toggle');
             const html = document.documentElement;
+            const logoIcon = document.getElementById('logo-icon');
+            const mainLogo = document.getElementById('main-logo');
+            const footerLogoIcon = document.getElementById('footer-logo-icon');
+
+            // Function to update logo sources based on theme
+            function updateLogos(isDark) {
+                if (isDark) {
+                    logoIcon.src = '/images/logo-icon-dark.png';
+                    mainLogo.src = '/images/logo-dark.png';
+                    footerLogoIcon.src = '/images/logo-icon-dark.png';
+                } else {
+                    logoIcon.src = '/images/logo-icon.png';
+                    mainLogo.src = '/images/logo.png';
+                    footerLogoIcon.src = '/images/logo-icon.png';
+                }
+            }
 
             // Check for saved user preference, if any
             const currentTheme = localStorage.getItem('theme') || 'light';
             if (currentTheme === 'dark') {
                 html.setAttribute('data-theme', 'dark');
+                updateLogos(true);
             }
 
             themeToggle.addEventListener('click', () => {
                 if (html.getAttribute('data-theme') === 'dark') {
                     html.removeAttribute('data-theme');
                     localStorage.setItem('theme', 'light');
+                    updateLogos(false);
                 } else {
                     html.setAttribute('data-theme', 'dark');
                     localStorage.setItem('theme', 'dark');
+                    updateLogos(true);
                 }
             });
         });
