@@ -553,7 +553,7 @@
             z-index: 2;
         }
 
-        .planet {
+               .planet {
             width: 200px;
             height: 200px;
             background: radial-gradient(circle at 30% 30%, #333, #000);
@@ -564,8 +564,8 @@
         }
 
         [data-theme="dark"] .planet {
-            background: radial-gradient(circle at 30% 30%, #eee, #fff);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            background: radial-gradient(circle at 30% 30%, #e0e0e0, #f5f5f5);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
         }
 
         .planet::after {
@@ -581,15 +581,22 @@
         }
 
         [data-theme="dark"] .planet::after {
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.2);
         }
+
         .orbit {
             position: absolute;
             width: 300px;
             height: 300px;
-            border: 1px dashed rgba(108, 99, 255, 0.3);
+            border: 2px solid rgba(108, 99, 255, 0.5);
             border-radius: 50%;
             animation: orbit-rotation 20s linear infinite;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .orbit {
+            border: 2px solid rgba(200, 200, 255, 0.7);
+            box-shadow: 0 0 15px rgba(200, 200, 255, 0.3);
         }
 
         .satellite {
@@ -601,6 +608,12 @@
             background-color: var(--black);
             border-radius: 50%;
             box-shadow: 0 0 10px rgba(108, 99, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .satellite {
+            background-color: var(--white);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         @keyframes orbit-rotation {
