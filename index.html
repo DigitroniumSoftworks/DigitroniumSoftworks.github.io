@@ -560,6 +560,12 @@
             border-radius: 50%;
             position: relative;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .planet {
+            background: radial-gradient(circle at 30% 30%, #eee, #fff);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
 
         .planet::after {
@@ -571,8 +577,12 @@
             height: 30px;
             background-color: rgba(255, 255, 255, 0.178);
             border-radius: 50%;
+            transition: var(--transition);
         }
 
+        [data-theme="dark"] .planet::after {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
         .orbit {
             position: absolute;
             width: 300px;
@@ -996,11 +1006,12 @@
         </div>
     </main>
 
-    <script>
+<script>
         // Navigation highlighting
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('.nav-links a');
+            const planet = document.querySelector('.planet');
             
             // Smooth scrolling for navigation links
             navLinks.forEach(link => {
@@ -1088,21 +1099,21 @@
             // Dark mode toggle functionality
             const themeToggle = document.querySelector('.theme-toggle');
             const html = document.documentElement;
-            const logoIcon = document.getElementById('logo-icon');
-            const mainLogo = document.getElementById('main-logo');
-            const footerLogoIcon = document.getElementById('footer-logo-icon');
+            const logoIcons = document.querySelectorAll('.logo-icon');
+            const mainLogos = document.querySelectorAll('.main-logo');
 
             // Function to update logo sources based on theme
             function updateLogos(isDark) {
-                if (isDark) {
-                    logoIcon.src = '/images/logo-icon-dark.png';
-                    mainLogo.src = '/images/logo-dark.png';
-                    footerLogoIcon.src = '/images/logo-icon-dark.png';
-                } else {
-                    logoIcon.src = '/images/logo-icon.png';
-                    mainLogo.src = '/images/logo.png';
-                    footerLogoIcon.src = '/images/logo-icon.png';
-                }
+                const logoPath = isDark ? '/images/logo-icon-dark.png' : '/images/logo-icon.png';
+                const mainLogoPath = isDark ? '/images/logo-dark.png' : '/images/logo.png';
+                
+                logoIcons.forEach(icon => {
+                    icon.src = logoPath;
+                });
+                
+                mainLogos.forEach(logo => {
+                    logo.src = mainLogoPath;
+                });
             }
 
             // Check for saved user preference, if any
@@ -1113,17 +1124,20 @@
             }
 
             themeToggle.addEventListener('click', () => {
-                if (html.getAttribute('data-theme') === 'dark') {
-                    html.removeAttribute('data-theme');
-                    localStorage.setItem('theme', 'light');
-                    updateLogos(false);
-                } else {
+                const isDark = html.getAttribute('data-theme') !== 'dark';
+                if (isDark) {
                     html.setAttribute('data-theme', 'dark');
                     localStorage.setItem('theme', 'dark');
-                    updateLogos(true);
+                } else {
+                    html.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
                 }
+                updateLogos(isDark);
             });
         });
     </script>
 </body>
 </html>
+
+
+
